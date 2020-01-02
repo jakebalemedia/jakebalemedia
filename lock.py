@@ -31,9 +31,9 @@ class Fullscreen_Window:
 	global dbPass
 	
 	dbHost = 'localhost'
-	dbName = 'DB_NAME'
-	dbUser = 'USER'
-	dbPass = 'PASSWORD'
+	dbName = 'door1_database'
+	dbUser = 'root'
+	dbPass = 'Summer123@'
 	
 	def __init__(self):
 		self.tk = tk.Tk()
