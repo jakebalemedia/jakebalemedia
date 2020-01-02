@@ -107,7 +107,6 @@ class Fullscreen_Window:
 							cur.execute("SELECT * FROM access_list WHERE rfid_code = '%s'" % (rfid_presented))
 							
 							if cur.rowcount != 1:
-                                self.configure(background='#C82700')
 								self.welcomeLabel.config(text="ACCESS DENIED")
 								
 								# Log access attempt
@@ -116,10 +115,8 @@ class Fullscreen_Window:
 								
 								time.sleep(3)
 								self.welcomeLabel.grid_forget
-                                self.configure(background='white')
 								self.show_idle()
 							else:
-                                self.configure(background='white')
 								user_info = cur.fetchone()
 								userPin = user_info['pin']
 								self.welcomeLabel.grid_forget()
@@ -202,24 +199,21 @@ class Fullscreen_Window:
 			cur.execute("UPDATE access_log SET pin_entered = '%s', pin_entered_datetime = NOW(), pin_granted = %s, mobile_number = '%s' WHERE access_id = %s" % (pin, pin_granted, accessLogId))
 			dbConnection.commit()
 			
-			if pin == userPin:
-				self.PINresultLabel = ttk.Label(self.tk, text="Access Granted
-                self.configure(background='#00BC25')
-				self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
-				self.PINresultLabel.grid(columnspan=3, sticky=tk.W+tk.E, pady=210)
+		if pin == userPin:
+			self.PINresultLabel = ttk.Label(self.tk, text="Access Granted
+			self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
+			self.PINresultLabel.grid(columnspan=3, sticky=tk.W+tk.E, pady=210)
 				
-				self.PINresultLabel.grid_forget()
-				GPIO.output(13,GPIO.HIGH)
+			self.PINresultLabel.grid_forget()
+			GPIO.output(13,GPIO.HIGH)
 				
-				self.doorOpenTimeout = threading.Timer(10, self.returnToIdle_fromAccessGranted)
-				self.doorOpenTimeout.start()   
-                self.configure(background='white')
-                
-             else:
-				self.PINresultLabel = ttk.Label(self.tk, text="Incorrect PIN\nEntered!")
-				self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
-				self.PINresultLabel.grid(sticky=tk.W+tk.E, pady=210)
-				self.PINenteredtimeout.start()   
+			self.doorOpenTimeout = threading.Timer(10, self.returnToIdle_fromAccessGranted)
+			self.doorOpenTimeout.start()   
+		else:
+			self.PINresultLabel = ttk.Label(self.tk, text="Incorrect PIN\nEntered!")
+			self.PINresultLabel.config(font='size, 20', justify='center', anchor='center')
+			self.PINresultLabel.grid(sticky=tk.W+tk.E, pady=210)
+			self.PINenteredtimeout.start()   
                 
 				
 if __name__ == '__main__':
