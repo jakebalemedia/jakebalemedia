@@ -9,7 +9,6 @@ import json
 from random import randint
 from evdev import InputDevice
 from select import select
-from twilio.rest import Client
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
